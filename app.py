@@ -233,9 +233,6 @@ correspondem ao ponto escolhido $P$.
         "Diferenças pequenas podem aparecer por erro numérico, baixa resolução ou efeitos de borda."
     )
 
-    with st.expander("Ver tabela numérica da variação"):
-        st.dataframe(df_area.reset_index(), use_container_width=True)
-
 except Exception as e:
     st.error("Não foi possível gerar a superfície. Verifique domínio, parâmetros e expressões digitadas.")
     st.exception(e)
