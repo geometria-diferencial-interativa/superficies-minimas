@@ -140,8 +140,8 @@ try:
 
     st.markdown(
         r"""
-Nesta versão, o estudante escolhe uma superfície parametrizada $X(u,v)$, altera parâmetros,
-seleciona um ponto $P=(u,v)$ e aplica uma variação normal
+Nesta interface, podemos escolher uma superfície parametrizada $X(u,v)$, alterar parâmetros,
+selecionar um ponto $P=(u,v)$ e aplicar uma variação normal
 
 $$
 X_t(u,v)=X(u,v)+t\,h(u,v)N(u,v).
@@ -229,27 +229,9 @@ correspondem ao ponto escolhido $P$.
         "Assim, quando colorimos por H ou K, não estamos mostrando um único número, mas sim uma função definida ponto a ponto."
     )
     st.write(
-        "Para uma superfície mínima, espera-se que H seja aproximadamente zero em todos os pontos interiores. "
+        "Para uma superfície mínima, precisamos que H seja zero em todos os pontos interiores. "
         "Diferenças pequenas podem aparecer por erro numérico, baixa resolução ou efeitos de borda."
     )
-
-    st.subheader("Área aproximada em função de t")
-    tmin, tmax = -1.0, 1.0
-    ts = np.linspace(tmin, tmax, 31)
-    vals = []
-    hp_vals = []
-    kp_vals = []
-    for tau in ts:
-        Xtau, _, _ = apply_variation(X, geom["N"], U, V, h_expr, float(tau))
-        gtau = compute_geometry(Xtau, du, dv)
-        vals.append(total_area(gtau["area_density"], du, dv))
-        hp_vals.append(float(gtau["H"][iP, jP]))
-        kp_vals.append(float(gtau["K"][iP, jP]))
-
-    df_area = pd.DataFrame(
-        {"t": ts, "Área aproximada": vals, "H_t(P)": hp_vals, "K_t(P)": kp_vals}
-    ).set_index("t")
-    st.line_chart(df_area[["Área aproximada"]])
 
     with st.expander("Ver tabela numérica da variação"):
         st.dataframe(df_area.reset_index(), use_container_width=True)
